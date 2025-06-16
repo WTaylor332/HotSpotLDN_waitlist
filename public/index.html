@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HotSpot LDN - The Place to Be</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <main class="container">
+        <img src="Logo.PNG" alt="HotSpot LDN Logo" class="logo">
+
+        <h1>London's Next Big Vibe is Loading...</h1>
+        <p>Be the first to get exclusive access to HotSpot LDN's curated events. Music, games, good times – get on the list and never miss out.</p>
+        
+        <form id="waitlist-form">
+            <input type="email" id="email-input" placeholder="Enter your email address" required>
+            <button type="submit">Get on the List</button>
+        </form>
+
+        <p id="message"></p>
+    </main>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    
+    <script src="script.js"></script>
+
+</body>
+</html>
