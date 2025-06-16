@@ -1,0 +1,117 @@
+/* Import Google Font: Nunito */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&display=swap');
+
+:root {
+    --brand-red: #E53935;
+    --brand-yellow: #FDEEC9;
+    --brand-orange: #FFC107;
+    --dark-text: #212121;
+}
+
+body {
+    font-family: 'Nunito', sans-serif;
+    background-color: var(--brand-yellow); /* Creamy yellow from logo bg */
+    color: var(--dark-text);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    background-color: #ffffff; /* Clean white card */
+    padding: 40px 50px;
+    border-radius: 16px;
+    box-shadow: 0 10px 35px rgba(0,0,0,0.15);
+    text-align: center;
+    max-width: 480px;
+    width: 100%;
+}
+
+.logo {
+    max-width: 220px; /* Control the size of the logo */
+    margin-bottom: 30px;
+}
+
+h1 {
+    font-size: 2.1em;
+    font-weight: 800;
+    margin-bottom: 15px;
+    line-height: 1.2;
+}
+
+p {
+    margin-bottom: 30px;
+    line-height: 1.7;
+    font-size: 1.1em;
+    color: #555;
+}
+
+#waitlist-form {
+    display: flex;
+    flex-direction: column;
+}
+
+#email-input {
+    padding: 15px;
+    margin-bottom: 15px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 1em;
+    font-family: 'Nunito', sans-serif;
+    background-color: #f9f9f9;
+    color: var(--dark-text);
+    transition: border-color 0.3s ease;
+}
+
+#email-input::placeholder {
+    color: #999;
+}
+
+#email-input:focus {
+    outline: none;
+    border-color: var(--brand-red);
+}
+
+button {
+    padding: 15px;
+    background-color: var(--brand-red); /* Red from logo */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1em;
+    font-weight: 700;
+    font-family: 'Nunito', sans-serif;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    background-color: #c62828; /* Darker red on hover */
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(229, 57, 53, 0.4);
+}
+
+button:disabled {
+    background-color: #aaa;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+#message {
+    margin-top: 20px;
+    font-weight: 700;
+    min-height: 24px;
+    font-size: 1.1em;
+}
+
+.success {
+    color: #2e7d32;
+}
+
+.error {
+    color: var(--brand-red);
+}
