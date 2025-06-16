@@ -1,117 +1,291 @@
-/* Import Google Font: Nunito */
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&display=swap');
-
 :root {
-    --brand-red: #E53935;
-    --brand-yellow: #FDEEC9;
-    --brand-orange: #FFC107;
-    --dark-text: #212121;
+    --primary: #E63946;
+    --secondary: #F77F00;
+    --background: #FEF6E4; /* A warm, inviting background */
+    --dark: #2D3436;
+    --light: #FAFAFA;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
     font-family: 'Nunito', sans-serif;
-    background-color: var(--brand-yellow); /* Creamy yellow from logo bg */
-    color: var(--dark-text);
+    line-height: 1.6;
+    color: var(--dark);
+    background: var(--background);
+    min-height: 100vh;
     display: flex;
-    justify-content: center;
     align-items: center;
-    height: 100vh;
-    margin: 0;
+    justify-content: center;
     padding: 20px;
 }
 
 .container {
-    background-color: #ffffff; /* Clean white card */
-    padding: 40px 50px;
-    border-radius: 16px;
-    box-shadow: 0 10px 35px rgba(0,0,0,0.15);
-    text-align: center;
-    max-width: 480px;
     width: 100%;
+    max-width: 550px;
+    text-align: center;
+}
+
+.logo-container {
+    margin-bottom: 25px;
 }
 
 .logo {
-    max-width: 220px; /* Control the size of the logo */
-    margin-bottom: 30px;
+    max-width: 200px;
 }
 
 h1 {
-    font-size: 2.1em;
+    font-size: 2.5rem;
     font-weight: 800;
-    margin-bottom: 15px;
-    line-height: 1.2;
+    margin-bottom: 10px;
 }
 
-p {
+.subtitle, .location {
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+.location {
+    color: var(--dark);
+    opacity: 0.8;
     margin-bottom: 30px;
-    line-height: 1.7;
-    font-size: 1.1em;
+}
+
+.form-container {
+    background: white;
+    border-radius: 20px;
+    padding: 35px;
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.1);
+    border: 2px solid white;
+    transition: all 0.3s ease-in-out;
+}
+
+.form-title {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--primary);
+    margin-bottom: 5px;
+}
+
+.form-subtitle {
+    font-size: 1rem;
+    color: var(--dark);
+    margin-bottom: 25px;
+    opacity: 0.7;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 700;
+    margin-bottom: 5px;
     color: #555;
 }
 
-#waitlist-form {
-    display: flex;
-    flex-direction: column;
-}
-
-#email-input {
-    padding: 15px;
-    margin-bottom: 15px;
-    border: 2px solid #ddd;
-    border-radius: 8px;
-    font-size: 1em;
+input[type="email"],
+input[type="text"] {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #EAEAEA;
+    border-radius: 10px;
+    font-size: 1rem;
     font-family: 'Nunito', sans-serif;
-    background-color: #f9f9f9;
-    color: var(--dark-text);
-    transition: border-color 0.3s ease;
-}
-
-#email-input::placeholder {
-    color: #999;
-}
-
-#email-input:focus {
-    outline: none;
-    border-color: var(--brand-red);
-}
-
-button {
-    padding: 15px;
-    background-color: var(--brand-red); /* Red from logo */
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 1.1em;
-    font-weight: 700;
-    font-family: 'Nunito', sans-serif;
-    cursor: pointer;
+    background: #FAFAFA;
+    color: var(--dark);
     transition: all 0.3s ease;
 }
 
-button:hover {
-    background-color: #c62828; /* Darker red on hover */
-    transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(229, 57, 53, 0.4);
+input:focus {
+    outline: none;
+    border-color: var(--primary);
+    background: white;
+    box-shadow: 0 0 0 4px rgba(230, 57, 70, 0.1);
 }
 
-button:disabled {
-    background-color: #aaa;
-    cursor: not-allowed;
-    transform: none;
-    box-shadow: none;
+.consent-group {
+    margin: 25px 0;
 }
 
-#message {
-    margin-top: 20px;
+.checkbox-wrapper {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    margin-right: 12px;
+    flex-shrink: 0;
+    margin-top: 3px;
+    cursor: pointer;
+    accent-color: var(--primary);
+}
+
+.checkbox-label {
+    font-size: 0.8rem;
+    color: #555;
+    line-height: 1.4;
+}
+
+.checkbox-label a {
+    color: var(--primary);
+    text-decoration: underline;
     font-weight: 700;
-    min-height: 24px;
-    font-size: 1.1em;
 }
 
-.success {
-    color: #2e7d32;
+.submit-btn {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 20px rgba(230, 57, 70, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
 }
 
-.error {
-    color: var(--brand-red);
+.submit-btn:hover:not(:disabled) {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(230, 57, 70, 0.4);
+}
+
+.submit-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.spinner {
+    display: none;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-top-color: #FFF;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.gdpr-footer {
+    margin-top: 30px;
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--dark);
+    opacity: 0.7;
+}
+
+.gdpr-footer a {
+    color: var(--primary);
+    text-decoration: none;
+    margin: 0 8px;
+    font-weight: 700;
+}
+.gdpr-footer a:hover {
+    text-decoration: underline;
+}
+
+.message {
+    display: none;
+    padding: 12px;
+    border-radius: 8px;
+    margin-top: 15px;
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+.error-message {
+    display: block;
+    background: #FFEBEE;
+    color: #B71C1C;
+    border: 1px solid #FFCDD2;
+}
+
+/* Success State */
+.success-container {
+    padding: 20px;
+    text-align: center;
+    animation: fadeIn 0.5s ease-out;
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+}
+.success-animation {
+    font-size: 4rem;
+    margin-bottom: 10px;
+    animation: bounce 0.6s ease-out;
+}
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+    overflow-y: auto;
+    animation: fadeIn 0.3s;
+}
+
+.modal-content {
+    background: white;
+    margin: 5% auto;
+    padding: 30px 40px;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 650px;
+    color: #333;
+    position: relative;
+}
+
+.modal-content h2 { font-size: 1.8rem; color: var(--primary); }
+.modal-content h3 { margin-top: 20px; font-size: 1.2rem; }
+.modal-content p, .modal-content li { margin-top: 10px; line-height: 1.7; }
+.modal-content ul { padding-left: 20px; }
+
+.close-modal {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 2rem;
+    font-weight: bold;
+    cursor: pointer;
+    color: #999;
+}
+.close-modal:hover { color: #333; }
+
+/* Honeypot */
+.honey {
+    position: absolute;
+    left: -9999px;
 }
