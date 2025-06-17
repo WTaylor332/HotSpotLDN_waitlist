@@ -120,8 +120,10 @@ function validateForm(formData) {
         errors.push('Please enter a valid email address.');
     }
 
-    // Phone validation (optional field)
-    if (formData.phone && !/^\+?[0-9\s-()]{7,20}$/.test(formData.phone)) {
+    // Phone validation
+    if (!formData.phone) {
+        errors.push('Please enter your phone number.');
+    } else if (!/^\+?[0-9\s-()]{7,20}$/.test(formData.phone)) {
         errors.push('Please enter a valid phone number.');
     }
     
