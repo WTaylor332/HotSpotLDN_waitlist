@@ -1,9 +1,12 @@
-:root {
+:root {    
     --primary: #E63946;
     --secondary: #F77F00;
-    --background: #FEF6E4; /* A warm, inviting background */
+    --accent: #FCBF49;
+    --background: #FAE3C0;
     --dark: #2D3436;
     --light: #FAFAFA;
+    --error: #E63946;
+    --success: #06D6A0;
 }
 
 * {
@@ -218,7 +221,6 @@ input[type="checkbox"] {
 }
 
 .error-message {
-    display: block;
     background: #FFEBEE;
     color: #B71C1C;
     border: 1px solid #FFCDD2;
