@@ -114,8 +114,15 @@ function showSuccessState(email) {
     document.getElementById('formContainer').innerHTML = `
         <div class="success-container">
             <div class="success-animation">🎉</div>
-            <h2 style="color: var(--primary); font-size: 2.5rem;">You're In!</h2>
-            <p>Welcome to the Hot Spot London family! We'll email you at <strong style="color: var(--primary);">${email}</strong> when tickets drop.</p>
+            <h2 style="color: var(--primary); font-size: 2.5rem; margin-bottom: 15px; text-shadow: 1px 1px 0px var(--secondary);">You're In!</h2>
+            <p style="font-size: 1.1rem; color: var(--dark); max-width: 450px; margin: 0 auto 25px auto;">Welcome to the Hot Spot London family! We'll email you at <strong style="color: var(--primary);">${email}</strong> when tickets drop.</p>
+            
+            <div class="social-follow">
+                <p style="font-weight: 700; margin-bottom: 15px;">Keep up with the latest announcements:</p>
+                <a href="https://www.instagram.com/hotspot.ldn/?igsh=eHhndjY3cG1haXNk#" target="_blank" rel="noopener noreferrer" class="social-btn">
+                    📸 Follow us on Instagram
+                </a>
+            </div>
         </div>
     `;
 }

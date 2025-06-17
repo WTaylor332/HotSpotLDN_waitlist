@@ -40,7 +40,7 @@ body {
 }
 
 .logo {
-    max-width: 220px;
+    max-width: 300px;
     height: auto;
 }
 
@@ -170,6 +170,32 @@ input[type="checkbox"] {
 @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
 .success-animation { font-size: 4rem; margin-bottom: 20px; animation: bounce 0.6s ease-out; }
 @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
+
+/* --- Styles for Social Button on Success Page --- */
+
+.social-follow {
+    margin-top: 30px;
+    padding-top: 30px;
+    border-top: 2px solid #f0f0f0;
+}
+
+.social-btn {
+    display: inline-block;
+    padding: 12px 28px;
+    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    color: white;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.social-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 7px 20px rgba(0,0,0,0.25);
+}
 
 /* Responsive */
 @media (max-width: 480px) { h1 { font-size: 2rem; } .form-container { padding: 25px 20px; } }
