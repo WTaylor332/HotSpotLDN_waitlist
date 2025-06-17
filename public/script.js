@@ -1,11 +1,11 @@
 // --- IMPORTANT: PASTE YOUR FIREBASE CONFIGURATION HERE ---
 const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_AUTH_DOMAIN",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_STORAGE_BUCKET",
-    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-    appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyDysYByueX654KLqqgpwnapxQBKLWnRflk",
+  authDomain: "hotspot-ldn-events.firebaseapp.com",
+  projectId: "hotspot-ldn-events",
+  storageBucket: "hotspot-ldn-events.firebasestorage.app",
+  messagingSenderId: "437464145360",
+  appId: "1:437464145360:web:c359d01cffd9aba3802dd5"
 };
 // ----------------------------------------------------
 
@@ -143,7 +143,7 @@ function validateForm(formData) {
 // Reusable hashing function
 async function hashString(str) {
     const msgBuffer = new TextEncoder().encode(str);
-    const hashBuffer = await crypto.subtle.digest('SHA-256', hashBuffer);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
     const hashArray = Array.from(new Uint8Array(hashBuffer));
     return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
 }
