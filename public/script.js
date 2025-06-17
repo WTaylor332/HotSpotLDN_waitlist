@@ -1,6 +1,4 @@
-import { initializeApp } from "firebase/app";
-
-// Your web app's Firebase configuration
+// --- IMPORTANT: PASTE YOUR FIREBASE CONFIGURATION HERE ---
 const firebaseConfig = {
   apiKey: "AIzaSyDysYByueX654KLqqgpwnapxQBKLWnRflk",
   authDomain: "hotspot-ldn-events.firebaseapp.com",
@@ -9,141 +7,121 @@ const firebaseConfig = {
   messagingSenderId: "437464145360",
   appId: "1:437464145360:web:c359d01cffd9aba3802dd5"
 };
+// ----------------------------------------------------
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
-// --- DOM Element References ---
-const form = document.getElementById('waitlistForm');
-const formContainer = document.getElementById('formContainer');
-const submitBtn = document.getElementById('submitBtn');
-const btnText = document.getElementById('btnText');
-const spinner = document.getElementById('spinner');
-const errorMessageEl = document.getElementById('errorMessage');
-
-// --- Form Submission Logic ---
-form.addEventListener('submit', async (e) => {
+// --- Main Form Submission Logic ---
+document.getElementById('waitlistForm').addEventListener('submit', async function(e) {
     e.preventDefault();
-    clearError();
-
-    // Get form data
-    const nameInput = document.getElementById('name');
-    const emailInput = document.getElementById('email');
-    const gdprConsentInput = document.getElementById('gdprConsent');
-    const marketingConsentInput = document.getElementById('marketingConsent');
-    const honeypotInput = document.querySelector('input[name="website"]');
-
-    // Basic validation
-    if (honeypotInput.value) {
-        console.warn("Bot detected via honeypot.");
-        return;
-    }
-    if (!form.checkValidity()) {
-        showError("Please fill out all required fields correctly.");
-        return;
-    }
+    document.getElementById('errorMessage').style.display = 'none';
 
     const formData = {
-        name: nameInput.value.trim(),
-        email: emailInput.value.trim().toLowerCase(),
-        gdprConsent: gdprConsentInput.checked,
-        marketingConsent: marketingConsentInput.checked,
+        name: document.getElementById('name').value.trim(),
+        email: document.getElementById('email').value.trim().toLowerCase(),
+        phone: document.getElementById('phone').value.trim(),
+        gdprConsent: document.getElementById('gdprConsent').checked,
+        marketingConsent: document.getElementById('marketingConsent').checked,
+        website: document.querySelector('input[name="website"]').value // Honeypot
     };
 
+    const errors = validateForm(formData);
+    if (errors.length > 0) {
+        showError(errors[0]);
+        return;
+    }
+    
     setLoading(true);
-
+    
     try {
-        // Check if email already exists
-        const existing = await db.collection('waitlist').where('email', '==', formData.email).get();
+        const emailHash = await hashString(formData.email);
+        const existing = await db.collection('waitlist').where('emailHash', '==', emailHash).get();
+        
         if (!existing.empty) {
             showError('This email is already on the waiting list!');
             setLoading(false);
             return;
         }
-
-        // Add to 'waitlist' collection
-        const waitlistRef = await db.collection('waitlist').add({
+        
+        const docRef = await db.collection('waitlist').add({
             name: formData.name,
             email: formData.email,
+            phone: formData.phone,
+            emailHash: emailHash,
             marketingConsent: formData.marketingConsent,
             signupTimestamp: firebase.firestore.FieldValue.serverTimestamp(),
-            source: 'Website Waiting List'
+            source: 'website'
         });
-
-        // Add to 'consent_log' for auditing
+        
         await db.collection('consent_log').add({
-            userId: waitlistRef.id,
-            email: formData.email,
+            userId: docRef.id,
+            emailHash: emailHash,
             gdprConsent: formData.gdprConsent,
             marketingConsent: formData.marketingConsent,
             action: 'Consent given during signup',
             timestamp: firebase.firestore.FieldValue.serverTimestamp()
         });
         
-        // We'll fake a success message for now, since we aren't sending real emails yet.
-        showSuccessMessage(formData.email);
-
+        showSuccessState(formData.email);
+        
     } catch (error) {
-        console.error("Submission Error: ", error);
+        console.error('Submission error:', error);
         showError('Sorry, something went wrong. Please try again later.');
         setLoading(false);
     }
 });
 
 
-// --- UI Helper Functions ---
+// --- Helper Functions ---
+
 function setLoading(isLoading) {
-    if (isLoading) {
-        submitBtn.disabled = true;
-        btnText.style.display = 'none';
-        spinner.style.display = 'block';
-    } else {
-        submitBtn.disabled = false;
-        btnText.style.display = 'inline';
-        spinner.style.display = 'none';
-    }
+    const submitBtn = document.getElementById('submitBtn');
+    const btnText = document.getElementById('btnText');
+    const spinner = document.getElementById('spinner');
+
+    submitBtn.disabled = isLoading;
+    btnText.style.display = isLoading ? 'none' : 'inline';
+    spinner.style.display = isLoading ? 'block' : 'none';
+}
+
+function validateForm(formData) {
+    const errors = [];
+    if (!formData.name) { errors.push('Please enter a valid name.'); }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) { errors.push('Please enter a valid email address.'); }
+    if (!formData.phone) { errors.push('Please enter your phone number.'); }
+    if (!formData.gdprConsent) { errors.push('You must accept the privacy policy to continue.'); }
+    if (formData.website) { errors.push('Bot detected'); }
+    return errors;
+}
+
+async function hashString(str) {
+    const msgBuffer = new TextEncoder().encode(str);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
 }
 
 function showError(message) {
-    errorMessageEl.textContent = message;
-    errorMessageEl.classList.add('error-message');
+    const errorEl = document.getElementById('errorMessage');
+    const errorText = document.getElementById('errorText');
+    errorText.textContent = message;
+    errorEl.style.display = 'block';
 }
 
-function clearError() {
-    errorMessageEl.textContent = '';
-    errorMessageEl.classList.remove('error-message');
-}
-
-function showSuccessMessage(email) {
-    formContainer.innerHTML = `
+function showSuccessState(email) {
+    document.getElementById('formContainer').innerHTML = `
         <div class="success-container">
             <div class="success-animation">🎉</div>
-            <h2 style="font-size: 2.5rem; color: var(--primary);">You're on the list!</h2>
-            <p style="font-size: 1.2rem; margin-top: 15px;">Thank you for joining. We'll email you at <strong style="color:var(--primary);">${email}</strong> when tickets drop!</p>
-            <p style="margin-top: 25px;">Follow us on social media for sneak peeks:</p>
-            </div>
+            <h2 style="color: var(--primary); font-size: 2.5rem;">You're In!</h2>
+            <p>Welcome to the Hot Spot London family! We'll email you at <strong style="color: var(--primary);">${email}</strong> when tickets drop.</p>
+        </div>
     `;
 }
 
-// --- Modal Handling ---
-function showPrivacyPolicy(e) {
-    if (e) e.preventDefault();
-    document.getElementById('privacyModal').style.display = 'block';
-}
-
-function showTerms(e) {
-    if (e) e.preventDefault();
-    document.getElementById('termsModal').style.display = 'block';
-}
-
-function closeModal(modalId) {
-    document.getElementById(modalId).style.display = 'none';
-}
-
-// Close modal when clicking on the background
-window.onclick = function(event) {
-    if (event.target.classList.contains('modal')) {
-        event.target.style.display = 'none';
-    }
-}
+// Modal controls
+function showPrivacyPolicy(e) { e.preventDefault(); document.getElementById('privacyModal').style.display = 'block'; }
+function showTerms(e) { e.preventDefault(); document.getElementById('termsModal').style.display = 'block'; }
+function closeModal(modalId) { document.getElementById(modalId).style.display = 'none'; }
+window.onclick = function(event) { if (event.target.classList.contains('modal')) { event.target.style.display = 'none'; } }
