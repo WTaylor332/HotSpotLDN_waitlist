@@ -1,0 +1,37 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Waitlist collection
+    match /waitlist/{document} {
+      // Allow reading to check for existing emails
+      allow read: if request.auth != null || true; // Temporarily allow for testing
+      
+      // Allow creating new waitlist entries
+      allow create: if 
+        // Check that all required fields exist
+        request.resource.data.keys().hasAll(['name', 'email', 'emailHash', 'gdprConsent', 'marketingConsent']) &&
+        // Validate field types and values
+        request.resource.data.name is string &&
+        request.resource.data.name.size() >= 2 &&
+        request.resource.data.email is string &&
+        request.resource.data.email.matches('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$') &&
+        request.resource.data.emailHash is string &&
+        request.resource.data.gdprConsent == true &&
+        request.resource.data.marketingConsent is bool;
+      
+      allow update: if false;
+      allow delete: if false;
+    }
+    
+    // Consent log
+    match /consent_log/{document} {
+      allow read: if false;
+      allow create: if 
+        request.resource.data.keys().hasAll(['userId', 'email', 'gdprConsent', 'marketingConsent', 'action', 'timestamp']) &&
+        request.resource.data.gdprConsent is bool &&
+        request.resource.data.marketingConsent is bool;
+      allow update: if false;
+      allow delete: if false;
+    }
+  }
+}
