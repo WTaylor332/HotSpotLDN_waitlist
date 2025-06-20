@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Join the waiting list for Hot Spot London's Summer R&B Day Party">
-    <meta name="robots" content="index, follow">
     <title>Summer Day Party - Hot Spot London</title>
     <link rel="stylesheet" href="style.css">
 </head>
@@ -35,8 +34,8 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="phone">Phone Number *</label>
-                    <input type="tel" id="phone" name="phone" placeholder="e.g., 07123 456789" required>
+                    <label for="phone">Phone Number (Optional)</label>
+                    <input type="tel" id="phone" name="phone" placeholder="e.g., 07123 456789">
                 </div>
 
                 <input type="text" name="website" class="honey" tabindex="-1" autocomplete="off">
@@ -62,10 +61,6 @@
                     <span id="btnText">Join Waiting List</span>
                     <div class="spinner" id="spinner"></div>
                 </button>
-
-                <div class="rate-limit-notice" id="rateLimitNotice">
-                    Too many attempts. Please wait 60 seconds before trying again.
-                </div>
             </form>
             
             <div id="errorMessage" class="message">
@@ -74,22 +69,8 @@
         </div>
     </div>
 
-    <div id="privacyModal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal" onclick="closeModal('privacyModal')">&times;</span>
-            <h2>Privacy Policy</h2>
-            <p><strong>Last Updated: 18 June 2025</strong></p>
-            <p>Your privacy is important to us. We collect your name, email, and phone number with your consent to notify you about this event and future events if you opt-in. Your data is stored securely and is not shared. You have the right to access, correct, or delete your data at any time by contacting us.</p>
-        </div>
-    </div>
-
-    <div id="termsModal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal" onclick="closeModal('termsModal')">&times;</span>
-            <h2>Terms of Service</h2>
-            <p>By joining, you agree to provide accurate information and are over 18. This is for personal use and does not guarantee a ticket.</p>
-        </div>
-    </div>
+    <div id="privacyModal" class="modal"></div>
+    <div id="termsModal" class="modal"></div>
 
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
